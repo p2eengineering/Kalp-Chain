@@ -120,6 +120,13 @@ func (i *Installer) setInput(args []string) {
 
 // Install installs a chaincode for use with _lifecycle.
 func (i *Installer) Install() error {
+	
+
+	// code checking 
+	if b := CompilerValidate(i.Input.PackageFile); !b{
+		return errors.WithMessage(&CompilerError{""}, "Compiler Validation Failed") // needs to be sent from compilerValidate function itself
+	}
+	
 	err := i.Input.Validate()
 	if err != nil {
 		return err
