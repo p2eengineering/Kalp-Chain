@@ -8,7 +8,7 @@ package chaincode
 
 import (
 	"context"
-
+	"os"
 	"github.com/golang/protobuf/proto"
 	cb "github.com/hyperledger/fabric-protos-go/common"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
@@ -121,12 +121,17 @@ func (i *Installer) setInput(args []string) {
 // Install installs a chaincode for use with _lifecycle.
 func (i *Installer) Install() error {
 	
-
 	// code checking 
+	
+	cwd1,_ := os.Getwd()
+
 	if b := CompilerValidate(i.Input.PackageFile); !b{
 		return errors.WithMessage(&CompilerError{""}, "Compiler Validation Failed") // needs to be sent from compilerValidate function itself
 	}
 	
+	// resetting the current directory
+    _ = os.Chdir(cwd1)
+
 	err := i.Input.Validate()
 	if err != nil {
 		return err
@@ -141,17 +146,19 @@ func (i *Installer) Install() error {
 	if err != nil {
 		return errors.Wrap(err, "failed to serialize signer")
 	}
+	logger.Infof("*** serializedSigner*******")
 
 	proposal, err := i.createInstallProposal(pkgBytes, serializedSigner)
 	if err != nil {
 		return err
 	}
-
+	logger.Infof("****post proposal*******", proposal)
 	signedProposal, err := signProposal(proposal, i.Signer)
 	if err != nil {
 		return errors.WithMessage(err, "failed to create signed proposal for chaincode install")
 	}
 
+	logger.Infof("****signed*******")
 	return i.submitInstallProposal(signedProposal)
 }
 
