@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    tools {
+		go 'go v1.18'
+	}
+	environment { 
+		GO111MODULE = 'on'
+		GOPATH = "$HOME/go"
+		PATH = "$PATH:$GOROOT/bin:$GOPATH/bin"
+	}
     stages {
         stage('Download package from FTP server') {
             when {
