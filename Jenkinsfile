@@ -6,7 +6,7 @@ pipeline {
                 branch 'beta-compiler-kalp-296'
             }
             steps {
-                sh 'scp -r ubuntu@13.233.229.232:/home/ubuntu/main/lib.linux-* /internal/peer/lifecycle/chaincode'
+                sh 'scp -r ubuntu@13.233.229.232:/home/ubuntu/main/lib.linux-* /var/lib/jenkins/workspace/_compiler_beta-compiler-kalp-296/internal/peer/lifecycle/chaincode'
             }
         }
         stage('Run make peer') {
