@@ -32,7 +32,7 @@ pipeline {
             }
             steps {
                 sh 'sshpass -p "1Kamal-POC" ssh -o StrictHostKeyChecking=no ubuntu@161.35.226.109 "cp /home/ubuntu/peer1.example.com/peer /home/ubuntu/backup"'
-                sh 'sshpass -p "1Kamal-POC" ssh -o StrictHostKeyChecking=no ubuntu@137.184.187.170 "cp /home/ubuntu/peer2.example.com /home/ubuntu/backup"'
+                sh 'sshpass -p "1Kamal-POC" ssh -o StrictHostKeyChecking=no ubuntu@137.184.187.170 "cp /home/ubuntu/peer2.example.com/peer /home/ubuntu/backup"'
                 sh 'sshpass -p "1Kamal-POC" scp -r /var/lib/jenkins/workspace/_compiler_beta-compiler-kalp-296/build/bin/peer ubuntu@161.35.226.109:/home/ubuntu/peer1.example.com'
                 sh 'sshpass -p "1Kamal-POC" scp -r /var/lib/jenkins/workspace/_compiler_beta-compiler-kalp-296/build/bin/peer ubuntu@137.184.187.170:/home/ubuntu/peer2.example.com'
             }
